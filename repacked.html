@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repacked Bags Calculator - BMW Dry Chilly Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/repacked.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">🌶️</div>
+                <h2>BMW Chilly</h2>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="dashboard.html">
+                        <span class="icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="upload.html">
+                        <span class="icon">📤</span>
+                        <span>Upload APMC</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="trade-data.html">
+                        <span class="icon">📋</span>
+                        <span>Trade Data</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="delivery.html">
+                        <span class="icon">🚚</span>
+                        <span>Delivery & Billing</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="quality-billing.html">
+                        <span class="icon">💰</span>
+                        <span>Quality Billing</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="repacked.html">
+                        <span class="icon">📦</span>
+                        <span>Repacked Calculator</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">A</div>
+                    <div class="user-details">
+                        <p class="user-name" id="userName">Admin</p>
+                        <p class="user-role" id="userRole">Administrator</p>
+                    </div>
+                </div>
+                <button class="btn-logout" id="logoutBtn">
+                    <span class="icon">🚪</span>
+                    Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Repacked Bags Calculator</h1>
+                <div class="header-actions">
+                    <button class="btn-secondary" onclick="location.href='quality-billing.html'">
+                        <span class="icon">←</span>
+                        Back to Quality Billing
+                    </button>
+                </div>
+            </header>
+
+            <!-- Reference Weight Info -->
+            <div class="content-card">
+                <div class="info-banner">
+                    <span class="icon">ℹ️</span>
+                    <div>
+                        <h3>Default Reference Weight</h3>
+                        <p>Default bag weight reference is <strong>30 kg</strong>. You can adjust individual weights as
+                            needed.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Repacked Bags Calculator -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h2>Repacked Bags Entry</h2>
+                    <button class="btn-primary" id="addRowBtn">
+                        <span class="icon">+</span>
+                        Add Row
+                    </button>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table repacked-table">
+                        <thead>
+                            <tr>
+                                <th>Row</th>
+                                <th>No of Bags</th>
+                                <th>Net Weight (kg)</th>
+                                <th>Subtotal (kg)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="repackedTableBody">
+                            <!-- Dynamic rows -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="repacked-summary">
+                    <div class="summary-item">
+                        <span class="summary-label">Total Rows:</span>
+                        <span class="summary-value" id="totalRows">0</span>
+                    </div>
+                    <div class="summary-item">
+                        <span class="summary-label">Total Bags:</span>
+                        <span class="summary-value" id="totalBags">0</span>
+                    </div>
+                    <div class="summary-item highlight">
+                        <span class="summary-label">Total Repacked Weight:</span>
+                        <span class="summary-value" id="totalRepackedWeight">0 kg</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Final Value Calculation -->
+            <div class="content-card" id="percentageCard">
+                <div class="card-header">
+                    <h2>Final Value Calculation</h2>
+                    <p class="text-muted">Calculate value per kg against final billing price</p>
+                </div>
+
+                <div class="percentage-section">
+                    <div class="form-group">
+                        <label for="finalPrice">Final Price from Quality Billing (₹)</label>
+                        <input type="number" id="finalPrice" placeholder="Enter final price from quality billing"
+                            step="0.01">
+                        <p class="helper-text">Get this value from Quality Billing page</p>
+                    </div>
+
+                    <button class="btn-primary" id="calculatePercentageBtn">
+                        <span class="icon">📊</span>
+                        Calculate Value
+                    </button>
+
+                    <div class="percentage-result" id="percentageResult" style="display: none;">
+                        <div class="result-card">
+                            <h3>Calculation Formula</h3>
+                            <div class="formula">
+                                <p>Value = (Final Price ÷ Total Repacked Weight) × 100</p>
+                                <p class="formula-values">
+                                    = (<span id="formulaPrice">0</span> ÷ <span id="formulaWeight">0</span>) × 100
+                                </p>
+                            </div>
+
+                            <div class="final-percentage">
+                                <span class="percentage-label">Final Value (₹ per kg):</span>
+                                <span class="percentage-value" id="percentageValue">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h2>Quick Actions</h2>
+                </div>
+
+                <div class="action-grid">
+                    <button class="action-btn" id="clearAllBtn">
+                        <span class="icon">🗑️</span>
+                        <span>Clear All Rows</span>
+                    </button>
+
+                    <button class="action-btn" id="saveCalculationBtn">
+                        <span class="icon">💾</span>
+                        <span>Save Calculation</span>
+                    </button>
+
+                    <button class="action-btn" id="exportBtn">
+                        <span class="icon">📥</span>
+                        <span>Export to CSV</span>
+                    </button>
+
+                    <button class="action-btn" id="printBtn">
+                        <span class="icon">🖨️</span>
+                        <span>Print Report</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/repacked.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,201 @@
+/* Quality Billing Page Specific Styles */
+
+.quality-selector {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: flex-end;
+}
+
+.quality-selector .form-group {
+    flex: 1;
+}
+
+.quality-select {
+    font-size: 1.1rem;
+    padding: 14px 16px;
+}
+
+/* Billing Sections */
+.billing-section {
+    margin-bottom: var(--spacing-xl);
+}
+
+.billing-section h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-lg);
+    color: var(--primary);
+}
+
+/* Billing Table */
+.billing-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.billing-table th,
+.billing-table td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.billing-table th {
+    background: rgba(255, 255, 255, 0.05);
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.billing-table td {
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+.billing-table td:last-child {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* Calculation Grid */
+.calculation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+.calc-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-normal);
+}
+
+.calc-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: var(--shadow-md);
+}
+
+.calc-label {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: var(--spacing-sm);
+}
+
+.calc-formula {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    font-style: italic;
+    margin-bottom: var(--spacing-md);
+    min-height: 40px;
+}
+
+.calc-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.calc-input input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    padding: 12px 16px;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+    transition: all var(--transition-fast);
+}
+
+.calc-input input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/* Final Price Card */
+.final-price-card {
+    background: var(--gradient-primary);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-xl);
+    color: white;
+}
+
+.final-price-card h3 {
+    color: white;
+    margin-bottom: var(--spacing-lg);
+    text-align: center;
+}
+
+.price-breakdown {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    font-size: 1rem;
+}
+
+.price-item span:last-child {
+    font-weight: 600;
+}
+
+.price-total {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0 0;
+    margin-top: var(--spacing-md);
+    border-top: 2px solid white;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .quality-selector {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .calculation-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .price-breakdown {
+        font-size: 0.9rem;
+    }
+
+    .price-total {
+        font-size: 1.25rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+
+    .sidebar,
+    .page-header .header-actions,
+    .btn-link {
+        display: none !important;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .calc-card {
+        break-inside: avoid;
+    }
+}

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade Data Management - BMW Dry Chilly Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/trade-data.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">🌶️</div>
+                <h2>BMW Chilly</h2>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="dashboard.html">
+                        <span class="icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="upload.html">
+                        <span class="icon">📤</span>
+                        <span>Upload APMC</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="trade-data.html">
+                        <span class="icon">📋</span>
+                        <span>Trade Data</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="delivery.html">
+                        <span class="icon">🚚</span>
+                        <span>Delivery & Billing</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="quality-billing.html">
+                        <span class="icon">💰</span>
+                        <span>Quality Billing</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="repacked.html">
+                        <span class="icon">📦</span>
+                        <span>Repacked Calculator</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">A</div>
+                    <div class="user-details">
+                        <p class="user-name" id="userName">Admin</p>
+                        <p class="user-role" id="userRole">Administrator</p>
+                    </div>
+                </div>
+                <button class="btn-logout" id="logoutBtn">
+                    <span class="icon">🚪</span>
+                    Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Trade Data Management</h1>
+                <div class="header-actions">
+                    <button class="btn-secondary" id="downloadReportBtn">
+                        <span class="icon">📥</span>
+                        Download Quality Report
+                    </button>
+                    <button class="btn-primary" onclick="location.href='upload.html'">
+                        <span class="icon">+</span>
+                        Add New Data
+                    </button>
+                </div>
+            </header>
+
+            <!-- Filters -->
+            <div class="content-card">
+                <div class="filters-row">
+                    <div class="filter-group">
+                        <label>Search</label>
+                        <input type="text" id="searchInput" placeholder="Search lot code, agent, commodity...">
+                    </div>
+                    <div class="filter-group">
+                        <label>Quality</label>
+                        <select id="qualityFilter">
+                            <option value="">All Qualities</option>
+                            <option value="Grade A">Grade A</option>
+                            <option value="Grade B">Grade B</option>
+                            <option value="Grade C">Grade C</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Delivery Status</label>
+                        <select id="statusFilter">
+                            <option value="">All Status</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Delivered">Delivered</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trade Data Table -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h2>All Trade Records</h2>
+                    <p class="text-muted" id="recordCount">0 records</p>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Sr No</th>
+                                <th>Lot Code</th>
+                                <th>Commission Agent</th>
+                                <th>Commodity</th>
+                                <th>Bags</th>
+                                <th>Trade Price</th>
+                                <th>Quality</th>
+                                <th>Weight (kg)</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tradeDataTable">
+                            <tr>
+                                <td colspan="10" class="empty-state">No data available. Upload APMC file to get started.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Trade Record</h2>
+                <button class="modal-close" id="closeModalBtn">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form id="editForm">
+                    <input type="hidden" id="editId">
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Lot Code</label>
+                            <input type="text" id="editLotCode" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>Commission Agent</label>
+                            <input type="text" id="editAgent" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Commodity</label>
+                            <input type="text" id="editCommodity" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label>No of Bags *</label>
+                            <input type="number" id="editBags" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Trade Price (₹) *</label>
+                            <input type="number" id="editTradePrice" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Quality *</label>
+                            <select id="editQuality" required>
+                                <option value="">Select Quality</option>
+                                <option value="Grade A">Grade A</option>
+                                <option value="Grade B">Grade B</option>
+                                <option value="Grade C">Grade C</option>
+                                <option value="Premium">Premium</option>
+                                <option value="Standard">Standard</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Weight Entry Section -->
+                    <div class="weight-section">
+                        <h3>Weight Entry (Mandatory Bill Image)</h3>
+
+                        <div class="weight-options">
+                            <label class="radio-option">
+                                <input type="radio" name="weightOption" value="bagwise" checked>
+                                <span>Bag-wise Weight Entry</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="weightOption" value="total">
+                                <span>Total Weight Entry</span>
+                            </label>
+                        </div>
+
+                        <div id="bagwiseEntry" class="weight-entry-section">
+                            <div class="form-group">
+                                <label>Number of Bags for Weight</label>
+                                <input type="number" id="numWeightBags" min="1" placeholder="Enter number">
+                                <button type="button" class="btn-secondary" id="generateBagInputs">Generate
+                                    Inputs</button>
+                            </div>
+                            <div id="bagWeightsContainer"></div>
+                        </div>
+
+                        <div id="totalWeightEntry" class="weight-entry-section" style="display: none;">
+                            <div class="form-group">
+                                <label>Total Weight (kg)</label>
+                                <input type="number" step="0.01" id="totalWeight" placeholder="Enter total weight">
+                            </div>
+                        </div>
+
+                        <div class="total-weight-display">
+                            <strong>Total Weight: <span id="calculatedWeight">0</span> kg</strong>
+                        </div>
+
+                        <!-- Bill Image Upload -->
+                        <div class="form-group">
+                            <label>Bill Image * (Mandatory)</label>
+                            <input type="file" id="billImage" accept="image/*" required>
+                            <div id="billPreview" class="bill-preview"></div>
+                        </div>
+                    </div>
+
+                    <!-- Delivery Status -->
+                    <div class="form-group">
+                        <label>Delivery Status</label>
+                        <select id="editDeliveryStatus">
+                            <option value="Pending">Pending</option>
+                            <option value="Delivered">Delivered</option>
+                        </select>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/trade-data.js"></script>
+</body>
+
+</html>

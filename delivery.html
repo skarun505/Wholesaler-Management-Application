@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery & Billing - BMW Dry Chilly Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/delivery.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">🌶️</div>
+                <h2>BMW Chilly</h2>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="dashboard.html">
+                        <span class="icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="upload.html">
+                        <span class="icon">📤</span>
+                        <span>Upload APMC</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="trade-data.html">
+                        <span class="icon">📋</span>
+                        <span>Trade Data</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="delivery.html">
+                        <span class="icon">🚚</span>
+                        <span>Delivery & Billing</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="quality-billing.html">
+                        <span class="icon">💰</span>
+                        <span>Quality Billing</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="repacked.html">
+                        <span class="icon">📦</span>
+                        <span>Repacked Calculator</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">A</div>
+                    <div class="user-details">
+                        <p class="user-name" id="userName">Admin</p>
+                        <p class="user-role" id="userRole">Administrator</p>
+                    </div>
+                </div>
+                <button class="btn-logout" id="logoutBtn">
+                    <span class="icon">🚪</span>
+                    Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Delivery & Billing Entry</h1>
+                <div class="header-actions">
+                    <button class="btn-secondary" id="viewDeliveriesBtn">
+                        <span class="icon">📋</span>
+                        View All Deliveries
+                    </button>
+                </div>
+            </header>
+
+            <!-- Delivery Entry Form -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h2>New Delivery Entry</h2>
+                    <p class="text-muted">Create delivery bill for quality-wise shipment</p>
+                </div>
+
+                <form id="deliveryForm" class="delivery-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="deliveryDate">Delivery Date *</label>
+                            <input type="date" id="deliveryDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="shopName">Shop Name *</label>
+                            <input type="text" id="shopName" placeholder="Enter shop name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="qualityName">Quality Name *</label>
+                            <select id="qualityName" required>
+                                <option value="">Select Quality</option>
+                            </select>
+                            <p class="helper-text">One bill = One quality only</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="bagCount">Bag Count *</label>
+                            <input type="number" id="bagCount" min="1" placeholder="Enter bag count" required>
+                            <p class="helper-text" id="bagCountHelper">Max 60 bags per vehicle</p>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning" id="bagWarning" style="display: none;">
+                        <span class="icon">⚠️</span>
+                        <p>Bag count exceeds 60! Maximum capacity per vehicle is 60 bags.</p>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="vehicleNumber">Vehicle Number</label>
+                            <input type="text" id="vehicleNumber" placeholder="Enter vehicle number (optional)">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="driverName">Driver Name</label>
+                            <input type="text" id="driverName" placeholder="Enter driver name (optional)">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notes">Additional Notes</label>
+                        <textarea id="notes" rows="3" placeholder="Enter any additional notes"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn-secondary" onclick="resetForm()">Reset</button>
+                        <button type="submit" class="btn-primary">
+                            <span class="icon">💾</span>
+                            Save Delivery Entry
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Recent Deliveries -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h2>Recent Deliveries</h2>
+                    <button class="btn-link" id="printBillBtn">Print Selected →</button>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <input type="checkbox" id="selectAll">
+                                </th>
+                                <th>Date</th>
+                                <th>Shop Name</th>
+                                <th>Quality</th>
+                                <th>Bags</th>
+                                <th>Vehicle</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="deliveriesTable">
+                            <tr>
+                                <td colspan="7" class="empty-state">No deliveries recorded yet.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Print Preview Modal -->
+    <div class="modal" id="printModal">
+        <div class="modal-content print-preview">
+            <div class="modal-header">
+                <h2>Delivery Bill Preview</h2>
+                <button class="modal-close" id="closePrintModal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div id="billContent" class="bill-content">
+                    <!-- Will be populated dynamically -->
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn-secondary" id="cancelPrintBtn">Cancel</button>
+                    <button class="btn-primary" id="confirmPrintBtn">
+                        <span class="icon">🖨️</span>
+                        Print Bill
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/delivery.js"></script>
+</body>
+
+</html>

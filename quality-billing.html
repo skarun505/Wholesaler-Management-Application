@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quality-Based Billing - BMW Dry Chilly Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/quality-billing.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">🌶️</div>
+                <h2>BMW Chilly</h2>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="dashboard.html">
+                        <span class="icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="upload.html">
+                        <span class="icon">📤</span>
+                        <span>Upload APMC</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="trade-data.html">
+                        <span class="icon">📋</span>
+                        <span>Trade Data</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="delivery.html">
+                        <span class="icon">🚚</span>
+                        <span>Delivery & Billing</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="quality-billing.html">
+                        <span class="icon">💰</span>
+                        <span>Quality Billing</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="repacked.html">
+                        <span class="icon">📦</span>
+                        <span>Repacked Calculator</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">A</div>
+                    <div class="user-details">
+                        <p class="user-name" id="userName">Admin</p>
+                        <p class="user-role" id="userRole">Administrator</p>
+                    </div>
+                </div>
+                <button class="btn-logout" id="logoutBtn">
+                    <span class="icon">🚪</span>
+                    Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Quality-Based Billing Calculator</h1>
+                <div class="header-actions">
+                    <button class="btn-primary" id="printBillingBtn">
+                        <span class="icon">🖨️</span>
+                        Print Summary
+                    </button>
+                </div>
+            </header>
+
+            <!-- Quality Selection -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h2>Select Quality for Billing</h2>
+                    <p class="text-muted">Calculate billing for a specific quality grade</p>
+                </div>
+
+                <div class="quality-selector">
+                    <div class="form-group">
+                        <label for="selectedQuality">Quality Name</label>
+                        <select id="selectedQuality" class="quality-select">
+                            <option value="">Select Quality</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" id="calculateBtn">
+                        <span class="icon">🔢</span>
+                        Calculate Billing
+                    </button>
+                </div>
+            </div>
+
+            <!-- Billing Calculation Results -->
+            <div class="content-card" id="billingResultsCard" style="display: none;">
+                <div class="card-header">
+                    <h2>Billing Summary - <span id="billingQuality"></span></h2>
+                    <button class="btn-link" onclick="location.href='repacked.html'">
+                        Go to Repacked Calculator →
+                    </button>
+                </div>
+
+                <!-- Quality Summary Table -->
+                <div class="billing-section">
+                    <h3>Quality Summary</h3>
+                    <table class="billing-table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Trade Price (per 100kg)</td>
+                                <td>₹<span id="tradePrice">0</span></td>
+                            </tr>
+                            <tr>
+                                <td>Total Weight</td>
+                                <td><span id="totalWeight">0</span> kg</td>
+                            </tr>
+                            <tr>
+                                <td>Total Bag Count</td>
+                                <td><span id="totalBags">0</span> bags</td>
+                            </tr>
+                            <tr>
+                                <td>Quality Price (per 100kg)</td>
+                                <td>₹<span id="qualityPrice">0</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Auto Calculations -->
+                <div class="billing-section">
+                    <h3>Automatic Calculations</h3>
+                    <div class="calculation-grid">
+                        <div class="calc-card">
+                            <div class="calc-label">Base Price</div>
+                            <div class="calc-formula">(Total Weight ÷ 100) × Trade Price</div>
+                            <div class="calc-value">₹<span id="basePrice">0</span></div>
+                        </div>
+
+                        <div class="calc-card">
+                            <div class="calc-label">Wastage (8%)</div>
+                            <div class="calc-formula">8% of Base Price</div>
+                            <div class="calc-value">₹<span id="wastage">0</span></div>
+                        </div>
+
+                        <div class="calc-card">
+                            <div class="calc-label">Delivery Charge</div>
+                            <div class="calc-formula">Fixed Amount</div>
+                            <div class="calc-value">₹<span id="deliveryCharge">720</span></div>
+                        </div>
+
+                        <div class="calc-card">
+                            <div class="calc-label">Repacked Charge</div>
+                            <div class="calc-formula">Manual Entry</div>
+                            <div class="calc-input">
+                                <input type="number" id="repackedCharge" value="0" min="0" step="0.01">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Final Price -->
+                <div class="billing-section">
+                    <div class="final-price-card">
+                        <h3>Final Price Calculation</h3>
+                        <div class="price-breakdown">
+                            <div class="price-item">
+                                <span>Base Price</span>
+                                <span>₹<span id="finalBase">0</span></span>
+                            </div>
+                            <div class="price-item">
+                                <span>+ Wastage</span>
+                                <span>₹<span id="finalWastage">0</span></span>
+                            </div>
+                            <div class="price-item">
+                                <span>+ Delivery Charge</span>
+                                <span>₹<span id="finalDelivery">720</span></span>
+                            </div>
+                            <div class="price-item">
+                                <span>+ Repacked Charge</span>
+                                <span>₹<span id="finalRepacked">0</span></span>
+                            </div>
+                            <div class="price-total">
+                                <span>Final Price</span>
+                                <span>₹<span id="finalPrice">0</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lot-wise Breakdown -->
+                <div class="billing-section">
+                    <h3>Lot-wise Breakdown</h3>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Lot Code</th>
+                                    <th>Commission Agent</th>
+                                    <th>Commodity</th>
+                                    <th>Bags</th>
+                                    <th>Weight (kg)</th>
+                                    <th>Trade Price</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lotBreakdownTable">
+                                <!-- Dynamic content -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/quality-billing.js"></script>
+</body>
+
+</html>

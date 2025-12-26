@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload APMC File - BMW Dry Chilly Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/upload.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">🌶️</div>
+                <h2>BMW Chilly</h2>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="dashboard.html">
+                        <span class="icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="upload.html">
+                        <span class="icon">📤</span>
+                        <span>Upload APMC</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="trade-data.html">
+                        <span class="icon">📋</span>
+                        <span>Trade Data</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="delivery.html">
+                        <span class="icon">🚚</span>
+                        <span>Delivery & Billing</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="quality-billing.html">
+                        <span class="icon">💰</span>
+                        <span>Quality Billing</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="repacked.html">
+                        <span class="icon">📦</span>
+                        <span>Repacked Calculator</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">A</div>
+                    <div class="user-details">
+                        <p class="user-name" id="userName">Admin</p>
+                        <p class="user-role" id="userRole">Administrator</p>
+                    </div>
+                </div>
+                <button class="btn-logout" id="logoutBtn">
+                    <span class="icon">🚪</span>
+                    Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Upload APMC File</h1>
+                <div class="header-actions">
+                    <button class="btn-secondary" onclick="location.href='dashboard.html'">
+                        <span class="icon">←</span>
+                        Back to Dashboard
+                    </button>
+                </div>
+            </header>
+
+            <!-- Upload Section -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h2>Upload Weekly Winner List</h2>
+                    <p class="text-muted">Upload PDF or Image file for automatic OCR extraction</p>
+                </div>
+
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-icon">📄</div>
+                    <h3>Drag & Drop your file here</h3>
+                    <p>or click to browse</p>
+                    <input type="file" id="fileInput" accept=".pdf,image/*" hidden>
+                    <button class="btn-primary" id="browseBtn">Browse Files</button>
+                    <p class="upload-info">Supported formats: PDF, JPG, PNG (Max 10MB)</p>
+                </div>
+
+                <div class="file-preview" id="filePreview" style="display: none;">
+                    <div class="preview-header">
+                        <h3>Selected File</h3>
+                        <button class="btn-secondary" id="removeFileBtn">Remove</button>
+                    </div>
+                    <div class="preview-content">
+                        <div class="file-icon">📄</div>
+                        <div class="file-details">
+                            <p class="file-name" id="fileName"></p>
+                            <p class="file-size" id="fileSize"></p>
+                        </div>
+                    </div>
+                    <button class="btn-primary" id="processBtn" style="width: 100%; margin-top: 16px;">
+                        <span class="icon">🔍</span>
+                        Process with OCR
+                    </button>
+                </div>
+            </div>
+
+            <!-- Processing Status -->
+            <div class="content-card" id="processingCard" style="display: none;">
+                <div class="processing-status">
+                    <div class="spinner"></div>
+                    <h3>Processing Your File...</h3>
+                    <p id="processingText">Extracting text from document</p>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Extracted Data Preview -->
+            <div class="content-card" id="extractedDataCard" style="display: none;">
+                <div class="card-header">
+                    <h2>Extracted Data (Editable)</h2>
+                    <div class="header-actions">
+                        <button class="btn-secondary" id="addRowBtn">
+                            <span class="icon">+</span>
+                            Add Row
+                        </button>
+                        <button class="btn-primary" id="saveDataBtn">
+                            <span class="icon">💾</span>
+                            Save to Trade Data
+                        </button>
+                    </div>
+                </div>
+
+                <div class="alert alert-info">
+                    <span class="icon">ℹ️</span>
+                    <p>Review and edit the extracted data below. OCR may have errors - please correct them before
+                        saving.</p>
+                </div>
+
+                <div class="table-container">
+                    <table class="data-table editable-table">
+                        <thead>
+                            <tr>
+                                <th>Sr. No</th>
+                                <th>Lot Code</th>
+                                <th>Commission Agent</th>
+                                <th>Commodity</th>
+                                <th>No. of Bags</th>
+                                <th>Trade Price (₹)</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="extractedTableBody">
+                            <!-- Dynamic content -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Tesseract.js for OCR -->
+    <script src='https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js'></script>
+    <script src="js/auth.js"></script>
+    <script src="js/upload.js"></script>
+</body>
+
+</html>

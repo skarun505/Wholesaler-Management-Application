@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - BMW Dry Chilly Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-icon">🌶️</div>
+                <h2>BMW Chilly</h2>
+            </div>
+
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="dashboard.html">
+                        <span class="icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="upload.html">
+                        <span class="icon">📤</span>
+                        <span>Upload APMC</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="trade-data.html">
+                        <span class="icon">📋</span>
+                        <span>Trade Data</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="delivery.html">
+                        <span class="icon">🚚</span>
+                        <span>Delivery & Billing</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="quality-billing.html">
+                        <span class="icon">💰</span>
+                        <span>Quality Billing</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="repacked.html">
+                        <span class="icon">📦</span>
+                        <span>Repacked Calculator</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">A</div>
+                    <div class="user-details">
+                        <p class="user-name" id="userName">Admin</p>
+                        <p class="user-role" id="userRole">Administrator</p>
+                    </div>
+                </div>
+                <button class="btn-logout" id="logoutBtn">
+                    <span class="icon">🚪</span>
+                    Logout
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <h1>Dashboard</h1>
+                <div class="header-actions">
+                    <button class="btn-secondary" id="refreshBtn">
+                        <span class="icon">🔄</span>
+                        Refresh
+                    </button>
+                </div>
+            </header>
+
+            <div class="dashboard-grid">
+                <!-- Stats Cards -->
+                <div class="stats-card">
+                    <div class="stats-icon stats-primary">📦</div>
+                    <div class="stats-content">
+                        <p class="stats-label">Total Lots</p>
+                        <h3 class="stats-value" id="totalLots">0</h3>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <div class="stats-icon stats-success">✓</div>
+                    <div class="stats-content">
+                        <p class="stats-label">Delivered</p>
+                        <h3 class="stats-value" id="deliveredCount">0</h3>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <div class="stats-icon stats-warning">⏳</div>
+                    <div class="stats-content">
+                        <p class="stats-label">Pending</p>
+                        <h3 class="stats-value" id="pendingCount">0</h3>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <div class="stats-icon stats-info">⚖️</div>
+                    <div class="stats-content">
+                        <p class="stats-label">Total Weight (kg)</p>
+                        <h3 class="stats-value" id="totalWeight">0</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="content-card">
+                <div class="card-header">
+                    <h2>Recent Activity</h2>
+                    <button class="btn-link" onclick="location.href='trade-data.html'">View All →</button>
+                </div>
+                <div class="table-container">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Lot Code</th>
+                                <th>Commission Agent</th>
+                                <th>Commodity</th>
+                                <th>Bags</th>
+                                <th>Trade Price</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentActivityTable">
+                            <tr>
+                                <td colspan="6" class="empty-state">No data available. Upload APMC file to get started.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <h2>Quick Actions</h2>
+                <div class="action-grid">
+                    <a href="upload.html" class="action-card">
+                        <span class="action-icon">📤</span>
+                        <h3>Upload APMC File</h3>
+                        <p>Upload PDF or image for OCR</p>
+                    </a>
+
+                    <a href="trade-data.html" class="action-card">
+                        <span class="action-icon">✏️</span>
+                        <h3>Edit Trade Data</h3>
+                        <p>Manage lots and entries</p>
+                    </a>
+
+                    <a href="delivery.html" class="action-card">
+                        <span class="action-icon">🚚</span>
+                        <h3>Delivery Entry</h3>
+                        <p>Add delivery & billing info</p>
+                    </a>
+
+                    <a href="quality-billing.html" class="action-card">
+                        <span class="action-icon">📊</span>
+                        <h3>Download Reports</h3>
+                        <p>Quality & billing reports</p>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+
+</html>
