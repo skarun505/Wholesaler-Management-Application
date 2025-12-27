@@ -1,4 +1,4 @@
-# BMW Dry Chilly Management - Demo Web Application
+# Wholesaler Management Application
 
 A comprehensive local web application for managing APMC weekly winner lists, trade data, delivery, and billing workflows for dry chilly business operations.
 
